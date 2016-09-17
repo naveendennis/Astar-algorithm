@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import beans.State;
 import core.AStar;
-import util.AdjacencyChecker;
+import util.StateValidatorUtil;
 
 public class Main {
 
@@ -31,10 +31,14 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		prompt();
+		try {
+			launcher();
+		} catch (Exception e) {
+			System.out.println("I am knapping! Do not disturb! :P");
+		}
 	}
 
-	public static void prompt() {
+	public static void launcher() {
 		System.out.println("Enter the grid size: ");
 		rowSize = in.nextInt();
 		colSize = in.nextInt();
@@ -43,18 +47,22 @@ public class Main {
 		System.out.println(" - - Goal State - - ");
 		State goalState = getState();
 		AStar obj = new AStar(initialState, goalState, rowSize, colSize);
-		AdjacencyChecker.setRowSize(rowSize);
-		AdjacencyChecker.setColumnSize(colSize);
+		StateValidatorUtil.setRowSize(rowSize);
+		StateValidatorUtil.setColumnSize(colSize);
 		List<State> result = obj.search();
 		for (State eachState : result) {
 			printStateValues(eachState.getStateValues());
+			System.out.println();
 		}
+		System.out.println("Closed List: " + obj.getClosedList().size());
+		System.out.println("Open List: " + obj.getOpenList().size());
+		System.out.println("Number of steps: "+result.size());
 	}
-	
-	public static void printStateValues(Integer[][] stateValues){
+
+	public static void printStateValues(Integer[][] stateValues) {
 		for (int outer = 0; outer < rowSize; outer++) {
 			for (int inner = 0; inner < colSize; inner++) {
-				System.out.print(stateValues[outer][inner]+ " ");
+				System.out.print(stateValues[outer][inner] + " ");
 			}
 			System.out.println();
 		}

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import beans.State;
-import util.AdjacencyChecker;
+import util.StateValidatorUtil;
 import util.StateUtil;
 
 /**
@@ -72,6 +72,20 @@ public class AStar {
 	}
 
 	/**
+	 * @return the number of states explored during the search process.
+	 */
+	public List<State> getClosedList() {
+		return closedList;
+	}
+
+	/**
+	 * @return the number of states that are to be explored in the next level.
+	 */
+	public PriorityQueue<State> getOpenList() {
+		return openList;
+	}
+
+	/**
 	 * checks if the currentState is the goalState the goalTest succeeds and
 	 * fails otherwise.
 	 * 
@@ -81,13 +95,39 @@ public class AStar {
 		return currentState.equals(goalState);
 	}
 
+	/**
+	 * searches the state space tree and returns the path to the goal state.
+	 * 
+	 * @return path to the goal state.
+	 */
 	public List<State> search() {
+		/**
+		 * Checks if the currentState is the goalState and loops through the
+		 * successors until the goal is reached.
+		 */
 		while (!goalTest()) {
+			/**
+			 * (Step 1): Generate the successors.
+			 */
 			List<State> fringe = generateSuccessors(currentState, goalState);
+			/**
+			 * (Step 2): Add them all to the priority Queue.
+			 */
 			openList.addAll(fringe);
+			/**
+			 * (Step 3): Poll the state with the lowest f(x) score and set that
+			 * as currentState.
+			 */
 			currentState = openList.poll();
+			/**
+			 * (Step 4): Add the currentstate to the closedList.
+			 */
 			closedList.add(currentState);
 		}
+		/**
+		 * Construct the path from the initial state to the goal state and
+		 * return the path.
+		 */
 
 		List<State> path = currentState.getAncestors();
 		path.add(currentState);
@@ -104,21 +144,52 @@ public class AStar {
 	 * @return the generated states (successors)
 	 */
 	private List<State> generateSuccessors(State currentState, State goalState) {
+		/**
+		 * At first it finds the position of zero in the grid which is the blank
+		 * space that can be occupied in the state.
+		 */
 		int[] swapPosition = StateUtil.gridSearch(0, currentState);
 		List<State> successorStates = new ArrayList<State>();
-		List<Integer[]> adjacentPositions = AdjacencyChecker.getAdjacentPositions(swapPosition[0], swapPosition[1]);
+		/**
+		 * Then find out the valid adjacent positions to the swapPosition.
+		 */
+		List<Integer[]> adjacentPositions = StateValidatorUtil.getAdjacentPositions(swapPosition[0], swapPosition[1]);
+		/**
+		 * For each position iterate over them.
+		 */
 		for (Integer[] eachPosition : adjacentPositions) {
+			/**
+			 * Create a new state for each iteration and assign the value of the
+			 * current state.
+			 */
 			State newState = new State(currentState);
 			if (!adjacentPositions.isEmpty()) {
+				/**
+				 * Assign the value of the blank to the adjacent space and swap
+				 * the blank it the adjacent nodes' current position.
+				 */
 				int temp = newState.getStateValues()[swapPosition[0]][swapPosition[1]];
 				newState.addAllAncestors(currentState.getAncestors());
 				newState.addToAncestors(currentState);
 				newState.setStateValue(currentState.getStateValues()[eachPosition[0]][eachPosition[1]], swapPosition[0],
 						swapPosition[1]);
 				newState.setStateValue(temp, eachPosition[0], eachPosition[1]);
+				/**
+				 * For each successor calculate g(x) as the g(x) of the ancestor
+				 * incremented by 1
+				 */
 				newState.setG(currentState.getG() + 1);
+				/**
+				 * For each state created calculate the heuristics, h(x). The
+				 * one used here is the sum of manhattan distances of the
+				 * misplaced tiles.
+				 */
 				newState.setH(StateUtil.calculateH(newState, goalState));
 			}
+			/**
+			 * If the adjacent position is already in the closed list it is not
+			 * considered as a part of the successor states.
+			 */
 			if (!closedList.contains(newState)) {
 				successorStates.add(newState);
 			}

@@ -1,4 +1,5 @@
 package util;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,11 +8,15 @@ import beans.State;
 public class StateUtil {
 
 	/**
-	 * Calculates the manhattan distance between the two states passed
+	 * Calculates the manhattan distance between the two states passed between
+	 * the current state and the goal state.
 	 * 
 	 * @param currentState
+	 *            It is the current position or the current state
 	 * @param goalState
-	 * @return
+	 *            It is the final state towards which the heuristics helps us to
+	 *            progress towards.
+	 * @return the heuristic function value for the provided states
 	 */
 	public static int calculateH(State currentState, State goalState) {
 		Map<Integer, Integer[]> currStateValues = getStateValues(currentState);
