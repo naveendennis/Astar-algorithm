@@ -1,6 +1,8 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import beans.State;
@@ -69,5 +71,16 @@ public class StateUtil {
 			}
 		}
 		return null;
+	}
+	
+	public static List<State> getPath(State lastState){
+		List<State> path = new ArrayList<State>();
+		State store = new State(lastState);
+		while(lastState.getParent() != null){
+			path.add(0, lastState.getParent());
+			lastState = lastState.getParent();
+		}
+		path.add(store);
+		return path;
 	}
 }

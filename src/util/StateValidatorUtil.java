@@ -106,5 +106,9 @@ public class StateValidatorUtil {
 		int limit = (flag == LIMIT_FLAG.XLIMIT) ? getRowSize() : getColumnSize();
 		return value >= 0 && value < limit;
 	}
+	
+	public final static boolean isValidValue(int value){
+		return value >= 0 && value <= 8;
+	}
 
 }

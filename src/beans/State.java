@@ -1,8 +1,5 @@
 package beans;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Each state in the 8 puzzle problem has 8x8 values of numbers from 1-8. The
  * blank position is represented by 0. It will also contain its heuristic and
@@ -26,16 +23,12 @@ public class State {
 	 */
 	private int h;
 
-	/**
-	 * This holds the list of ancestors of the state
-	 */
-	List<State> ancestors;
+	State parent;
 
 	/**
 	 * It initializes the ancestors object along with object creation.
 	 */
 	public State() {
-		ancestors = new ArrayList<State>();
 	}
 
 	/**
@@ -47,16 +40,11 @@ public class State {
 	 */
 	public State(State e) {
 		// TODO fix this
-		this.stateValues = new Integer[e.stateValues.length][e.stateValues[0].length];
-		for (int xIterator = 0; xIterator < e.stateValues.length; xIterator++) {
-			for (int yIterator = 0; yIterator < e.stateValues[xIterator].length; yIterator++) {
-				this.stateValues[xIterator][yIterator] = e.stateValues[xIterator][yIterator];
-			}
-		}
+		this.setStateValues(e);
 
 		this.g = e.g;
 		this.h = e.h;
-		this.ancestors = new ArrayList<State>();
+		this.parent = null;
 	}
 
 	public Integer[][] getStateValues() {
@@ -91,32 +79,21 @@ public class State {
 		return g + h;
 	}
 
-	public List<State> getAncestors() {
-		return ancestors;
+	public State getParent() {
+		return parent;
 	}
 
-	/**
-	 * USed to set the list of ancestors
-	 * @param ancestors
-	 */
-	public void setAncestors(List<State> ancestors) {
-		this.ancestors = ancestors;
+	public void setParent(State parent) {
+		this.parent = parent;
 	}
 
-	/**
-	 * Adds a single ancestor to the state
-	 * @param state the state to be added to the ancestor list
-	 */
-	public void addToAncestors(State state) {
-		this.ancestors.add(state);
-	}
-
-	/**
-	 * Add all the ancestors passed to this function
-	 * @param states List of states that are ancestors of the current state
-	 */
-	public void addAllAncestors(List<State> states) {
-		this.ancestors.addAll(states);
+	public void setStateValues(State state) {
+		this.stateValues = new Integer[state.stateValues.length][state.stateValues[0].length];
+		for (int xIterator = 0; xIterator < state.stateValues.length; xIterator++) {
+			for (int yIterator = 0; yIterator < state.stateValues[xIterator].length; yIterator++) {
+				this.stateValues[xIterator][yIterator] = state.stateValues[xIterator][yIterator];
+			}
+		}
 	}
 
 	/**

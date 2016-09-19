@@ -129,8 +129,7 @@ public class AStar {
 		 * return the path.
 		 */
 
-		List<State> path = currentState.getAncestors();
-		path.add(currentState);
+		List<State> path = StateUtil.getPath(currentState);
 		return path;
 
 	}
@@ -169,8 +168,7 @@ public class AStar {
 				 * the blank it the adjacent nodes' current position.
 				 */
 				int temp = newState.getStateValues()[swapPosition[0]][swapPosition[1]];
-				newState.addAllAncestors(currentState.getAncestors());
-				newState.addToAncestors(currentState);
+				newState.setParent(currentState);
 				newState.setStateValue(currentState.getStateValues()[eachPosition[0]][eachPosition[1]], swapPosition[0],
 						swapPosition[1]);
 				newState.setStateValue(temp, eachPosition[0], eachPosition[1]);
