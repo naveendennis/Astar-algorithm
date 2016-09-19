@@ -63,7 +63,7 @@ public class AStar {
 		currentState.setH(StateUtil.calculateH(currentState, goalState));
 		closedList.add(currentState);
 		this.goalState = goalState;
-		openList = new PriorityQueue<State>(10, new Comparator<State>() {
+		openList = new PriorityQueue<State>(1500, new Comparator<State>() {
 			@Override
 			public int compare(State o1, State o2) {
 				return o1.getF() - o2.getF();
