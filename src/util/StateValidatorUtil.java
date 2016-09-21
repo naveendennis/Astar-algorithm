@@ -108,8 +108,28 @@ public class StateValidatorUtil {
 		return value >= 0 && value < limit;
 	}
 
-	public final static boolean isValidValue(int value) {
-		return value >= 0 && value <= 8;
+	/**
+	 * Validates the state values with a given range
+	 * @param value the value of the state (The matrix of values)
+	 * @return true if it is valid and false if it is not
+	 */
+	public final static boolean isValidValue(int value, int rowSize, int colSize) {
+		return value >= 0 && value <= rowSize*colSize-1;
+	}
+	
+	/**
+	 * Checks whether the value entered is an integer
+	 * @param value token passed
+	 * @return true if the token is an integer and false otherwise
+	 */
+	public final static boolean isInteger(String value){
+		boolean result = true;
+		try{
+			Integer.parseInt(value); 
+		}catch(Exception e){
+			result = false;
+		}
+		return result;
 	}
 
 }

@@ -45,7 +45,7 @@ public class AStar {
 	 * Initializing AStar algorithm by initializing the history variable, the
 	 * initState and goalState.
 	 * 
-	 * @param currentState
+	 * @param initState
 	 *            The begin state of the 8 puzzle problem.
 	 * @param goalState
 	 *            The goal state of the 8 puzzle problem which is used in

@@ -11,7 +11,7 @@ import beans.State;
 import core.AStar;
 import util.StateValidatorUtil;
 
-public class Main {
+public class Launch {
 
 	private static Scanner in;
 	private static int rowSize;
@@ -37,7 +37,7 @@ public class Main {
 
 				while (true) {
 					buffer = in.nextInt();
-					if (StateValidatorUtil.isValidValue(buffer) && !enteredValues.contains(buffer)) {
+					if (StateValidatorUtil.isValidValue(buffer, rowSize, colSize) && !enteredValues.contains(buffer)) {
 						stateValues[iterator][innerIterator] = buffer;
 						enteredValues.add(buffer);
 						break;
@@ -55,24 +55,41 @@ public class Main {
 		try {
 			launcher();
 		} catch (Exception e) {
-			System.out.println("Make sure that the blank space is entered as 0 and that all of them are numbers\n"
-					+ "If that does not work contact my maker :P");
+			System.out.println("Oops something went wrong!\n"
+					+ "Make sure that the blank space is entered as 0 in the grid and that all of them are numbers\n");
+		} finally {
+			System.out.println("Program ends...");
+			in.close();
 		}
+	}
+
+	private static char getChoice() {
+		return in.next().toLowerCase().charAt(0);
 	}
 
 	/**
 	 * All the input and output operations are invoked from this function. AStar
 	 * is invoked from this method after all the initial parameters are set
 	 */
-	public static void launcher() {
+	private static void launcher() {
 		System.out.println("Continue with the grid size as 3x3 (Y/N): ");
-		char choice = in.next().toLowerCase().charAt(0);
+		char choice = Launch.getChoice();
 		if (choice == 'y') {
 			rowSize = colSize = 3;
 		} else {
 			System.out.println("Enter the grid size: ");
-			rowSize = in.nextInt();
-			colSize = in.nextInt();
+			String rBuffer = in.next();
+			while (!StateValidatorUtil.isInteger(rBuffer)) {
+				System.out.println("Enter a valid row grid size:");
+				rBuffer = in.next();
+			}
+			String cBuffer = in.next();
+			while (!StateValidatorUtil.isInteger(cBuffer)) {
+				System.out.println("Enter a valid column grid size:");
+				cBuffer = in.next();
+			}
+			rowSize = Integer.valueOf(rBuffer);
+			colSize = Integer.valueOf(cBuffer);
 		}
 
 		System.out.println("\n - - Initial State - - ");
@@ -89,7 +106,7 @@ public class Main {
 			System.out.println();
 		}
 		System.out.println("Number of states in Path: " + result.size());
-		in.close();
+
 	}
 
 	/**
