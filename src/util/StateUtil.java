@@ -1,3 +1,6 @@
+/**
+ * COPYRIGHTS. All rights reserved. THis belongs to Naveen Dennis B from UNC Charlotte
+ */
 package util;
 
 import java.util.ArrayList;
@@ -7,6 +10,11 @@ import java.util.Map;
 
 import beans.State;
 
+/**
+ * It will contain all the utility functions the are needed for the state class.
+ * @author dennis
+ *
+ */
 public class StateUtil {
 
 	/**
@@ -72,11 +80,19 @@ public class StateUtil {
 		}
 		return null;
 	}
-	
-	public static List<State> getPath(State lastState){
+
+	/**
+	 * It calculates the path from the last state to the initial state.
+	 * 
+	 * @param lastState
+	 *            It will be the goal state passed to this function
+	 * @return The path starting from the initial state till the goal state
+	 *         (lastState)
+	 */
+	public static List<State> getPath(State lastState) {
 		List<State> path = new ArrayList<State>();
 		State store = new State(lastState);
-		while(lastState.getParent() != null){
+		while (lastState.getParent() != null) {
 			path.add(0, lastState.getParent());
 			lastState = lastState.getParent();
 		}

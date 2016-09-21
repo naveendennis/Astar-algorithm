@@ -1,3 +1,6 @@
+/**
+ * COPYRIGHTS. All rights reserved. THis belongs to Naveen Dennis B from UNC Charlotte
+ */
 package launcher;
 
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ public class Main {
 
 	/**
 	 * Gets the values of the state and validates them
+	 * 
 	 * @return the state object that contains the values entered
 	 */
 	public static State createState() {
@@ -38,7 +42,7 @@ public class Main {
 						enteredValues.add(buffer);
 						break;
 					}
-					System.out.print("Value entered is invalid!\n" + "Enter a valid value for(" + iterator + ", "
+					System.out.print("Value entered is invalid!\n" + "Enter a valid value for (" + iterator + ", "
 							+ innerIterator + ") :");
 				}
 			}
@@ -52,14 +56,25 @@ public class Main {
 			launcher();
 		} catch (Exception e) {
 			System.out.println("Make sure that the blank space is entered as 0 and that all of them are numbers\n"
-					+ "If that does not work contact my maker...but don't be too hard on him he worked hard on me");
+					+ "If that does not work contact my maker :P");
 		}
 	}
 
+	/**
+	 * All the input and output operations are invoked from this function. AStar
+	 * is invoked from this method after all the initial parameters are set
+	 */
 	public static void launcher() {
-		System.out.println("Enter the grid size: ");
-		rowSize = in.nextInt();
-		colSize = in.nextInt();
+		System.out.println("Continue with the grid size as 3x3 (Y/N): ");
+		char choice = in.next().toLowerCase().charAt(0);
+		if (choice == 'y') {
+			rowSize = colSize = 3;
+		} else {
+			System.out.println("Enter the grid size: ");
+			rowSize = in.nextInt();
+			colSize = in.nextInt();
+		}
+
 		System.out.println("\n - - Initial State - - ");
 		State initialState = createState();
 		System.out.println("\n - - Goal State - - ");
@@ -73,11 +88,16 @@ public class Main {
 			printStateValues(eachState.getStateValues());
 			System.out.println();
 		}
-		System.out.println("\nClosed List: " + obj.getClosedList().size());
-		System.out.println("Open List: " + obj.getOpenList().size());
 		System.out.println("Number of states in Path: " + result.size());
+		in.close();
 	}
 
+	/**
+	 * It prints the values of the matrix passed to it.
+	 * 
+	 * @param stateValues
+	 *            the inputs that are to be printed.
+	 */
 	public static void printStateValues(Integer[][] stateValues) {
 		for (int outer = 0; outer < rowSize; outer++) {
 			for (int inner = 0; inner < colSize; inner++) {

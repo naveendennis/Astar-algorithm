@@ -1,8 +1,8 @@
-package core;
-
 /**
  * COPYRIGHTS. All rights reserved. THis belongs to Naveen Dennis B from UNC Charlotte
  */
+package core;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

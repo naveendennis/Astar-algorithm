@@ -1,3 +1,6 @@
+/**
+ * COPYRIGHTS. All rights reserved. THis belongs to Naveen Dennis B from UNC Charlotte
+ */
 package beans;
 
 /**

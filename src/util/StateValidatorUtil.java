@@ -6,7 +6,8 @@ import java.util.List;
 /**
  * This class will help AStar to compute the adjacent elements of a given
  * vertex. Only singleton object of this class is made available for use to
- * AStar.
+ * AStar. It will provide functions that helps to validate the state and its
+ * values.
  * 
  * @author dennis
  *
@@ -106,8 +107,8 @@ public class StateValidatorUtil {
 		int limit = (flag == LIMIT_FLAG.XLIMIT) ? getRowSize() : getColumnSize();
 		return value >= 0 && value < limit;
 	}
-	
-	public final static boolean isValidValue(int value){
+
+	public final static boolean isValidValue(int value) {
 		return value >= 0 && value <= 8;
 	}
 
